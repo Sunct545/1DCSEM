@@ -1,0 +1,13 @@
+%Added by Tanger, 2023.1.19, because the main process omitted it
+function [oval] = besselj(idxBessel, krho)
+    PI = 3.14159165;
+    fun1 = @(ksi) (exp(1i * krho * sin(ksi)));
+    if (idxBessel == 0)
+    elseif (idxBessel == 1)
+        fun1 = @(ksi) (sin(ksi) * exp(1i * krho * sin(ksi)) / (1i));
+    elseif (idxBessel == 2)
+        fun1 = @(ksi) (cos(2 * ksi) * exp(1i * krho * sin(ksi)));
+    end
+    
+    oval = integral(fun1, 0, 2 * PI, 'AbsTol',1e-10, 'RelTol',1e-10) / (2 * PI);
+end
